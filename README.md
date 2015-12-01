@@ -1,10 +1,13 @@
 Confidant
 =============
 
-Brought to you by Reinhardt @ Lighthouse Labs
+Brought to you by Reinhardt C @ Lighthouse Labs
 
-## Getting Started
-
-1. `bundle install`
-2. `shotgun -p 3000 -o 0.0.0.0`
-3. Visit `http://localhost:3000/` in your browser
+## Description
+- contact list type app
+-- can create new contacts
+-- can list all contacts
+-- can show a specific contact given an ID
+-- can find a specific contact by firstname, lastname, or email
+- built using Sinatra Framework
+- JavaScript / jQuery / CSS front-end
