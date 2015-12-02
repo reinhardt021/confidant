@@ -11,14 +11,7 @@ end
 get '/contacts/find' do
   results = { result: false }
   search = params[:search].strip
-
-  if search
-    search = "%#{search.to_s}%"     
-  else
-    search = ""
-  end
-
-  contacts = Contact.where("firstname LIKE :term OR lastname LIKE :term OR email LIKE :term", { term: search })
+  contacts = Contact.search(search)
 
   if contacts.any? # need to check if anything is returned
     results[:result] = true

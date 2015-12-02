@@ -3,6 +3,18 @@ class Contact < ActiveRecord::Base
 
   validates :email, uniqueness: true
 
+  scope :search, lambda { |term|
+    if term
+      term = "%#{term.to_s}%"     
+    else
+      term = ""
+    end
+
+    sql = "firstname LIKE :term OR lastname LIKE :term OR email LIKE :term"
+
+    where(sql, { term: term })
+  }
+
   def to_s
     "#{self.id}: #{self.firstname} #{self.lastname} (#{self.email})"
   end
