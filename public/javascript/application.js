@@ -1,25 +1,53 @@
 $(document).ready(function() {
-  alert('everything has loaded');
 
-  function listContacts() {
-    return $.ajax({
-      url: '/list',
-      method: 'GET',
-      data: {  }
-    });
-  }
+  var handlers = {
+    container: $('#friends').find('tbody'),
+    listContacts: function () {
+      return $.ajax({
+        url: '/contacts',
+        method: 'GET',
+      });  
+    },
+    newContact: function (contact) {
+      return $.ajax({
+        url: '',
+        method: 'POST',
+        dataType: 'json',
+        data: contact
+      });
+    }
+  };
+
 
   $('#list').on('click', function getAll() {
-    var p = $('<p>').text('button clicked');
-    var friend_box = $('#friends');
-    friend_box.append(p);
+    // var container = $('#friends');
 
-    listContacts().done(function addToPage(data) {
+    handlers.listContacts().done(function addAllToPage(data) {
+
       for (var i = 0; i < data.length; i++) {
-        var box = $('<div>').text(data[i].email);
-        friend_box.append(box);
+        var row = $('<tr>').appendTo(handlers.container);
+        $('<td>').text(data[i].firstname).appendTo(row);
+        $('<td>').text(data[i].lastname).appendTo(row);
+        $('<td>').text(data[i].email).appendTo(row);
+        // var contactNumbers = $('<td>').text('numbers: ' + data[i].numbers);
+        // may have to do a search within a search
+        // list within a list for the numbers
       }
     });
+
+  });
+
+
+  $('#add').on('click', function addContact() {
+    var firstName = $('#firstName').val();
+    var lastName = $('#lastName').val(); 
+    var email = $('#email').val();
+    var contact = { firstname: firstName, lastname: lastName, email: email };
+
+
+    handlers.newContact(contact).done();
+    
+    var tr = $('<tr>')
 
   });
 

@@ -3,8 +3,32 @@ get '/' do
   erb :index
 end
 
-get '/list' do
-  all_contacts = Contact.all
+get '/contacts' do
+  contacts = Contact.all
+  json contacts
+end
 
-  json all_contacts
+get '/contacts/:id' do |id|
+  contact = Contact.find(id)
+  json contact
+end
+
+post '/contacts' do
+  results = { result: false }
+  firstname = params[:firstname]
+  lastname = params[:lastname]
+  email = params[:email]
+
+  contact = Contact.new(
+    firstname: firstname,
+    lastname: lastname,
+    email: email 
+  )
+
+  if contact.save
+    results[:result] = true
+    results[:contact] = contact
+  end
+
+  json results
 end
