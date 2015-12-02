@@ -15,8 +15,8 @@ end
 
 post '/contacts' do
   results = { result: false }
-  firstname = params[:firstname]
-  lastname = params[:lastname]
+  firstname = params[:firstName]
+  lastname = params[:lastName]
   email = params[:email]
 
   contact = Contact.new(
