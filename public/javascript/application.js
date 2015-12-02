@@ -2,12 +2,7 @@ $(document).ready(function() {
 
   var handlers = {
     container: $('#friends').find('tbody'),
-    listContacts: function () {
-      return $.ajax({
-        url: '/contacts',
-        method: 'GET',
-      });  
-    },
+
     newContact: function (contact) {
       return $.ajax({
         url: '/contacts',
@@ -16,18 +11,27 @@ $(document).ready(function() {
         data: contact
       });
     },
+    addContact: function (index, contact) {
+      var row = $('<tr>').appendTo(handlers.container);
+        $('<td>').text(contact.firstname).appendTo(row);
+        $('<td>').text(contact.lastname).appendTo(row);
+        $('<td>').text(contact.email).appendTo(row);
+        // $('<td>').text(contact.numbers).appendTo(row);
+        // may have to do a search within a search
+        // list within a list for the numbers
+    },
+    receiveContacts: function (contacts) {
+      $.each(contacts, handlers.addContact);
+    },
+    listContacts: function () {
+      return $.ajax({
+        url: '/contacts',
+        method: 'GET',
+      });  
+    },
     getContacts: function () {
-      handlers.listContacts().done(function addAllToPage(contacts) {
-        $.each(contacts, function (index, contact) {
-          var row = $('<tr>').appendTo(handlers.container);
-          $('<td>').text(contact.firstname).appendTo(row);
-          $('<td>').text(contact.lastname).appendTo(row);
-          $('<td>').text(contact.email).appendTo(row);
-          // // var contactNumbers = $('<td>').text('numbers: ' + data[i].numbers);
-          // may have to do a search within a search
-          // list within a list for the numbers
-        });
-      });
+      handlers.container.empty(); // reset table
+      handlers.listContacts().done(handlers.receiveContacts);
     }
   };
 
