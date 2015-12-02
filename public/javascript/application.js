@@ -4,8 +4,8 @@ $(document).ready(function() {
     container: $('#friends').find('tbody'),
     addContact: function (index, contact) {
       var row = $('<tr>').appendTo(handlers.container);
-      $('<td>').text(contact.firstname).appendTo(row);
-      $('<td>').text(contact.lastname).appendTo(row);
+      $('<td>').text(contact.firstname).appendTo(row);// add class names 
+      $('<td>').text(contact.lastname).appendTo(row);// select class to remove text and put input field with preset value of contact name
       $('<td>').text(contact.email).appendTo(row);
       $('<td>').text(contact.numbers).appendTo(row);
       var edit = $('<td>').appendTo(row);
@@ -86,9 +86,9 @@ $(document).ready(function() {
       console.log(el.data()); //data gives you the contact_id
       console.log(this); //data gives you the contact_id
 
-      // handlers.deleteAjax(el.data()).done(function (result) {
-      //   console.log(result);
-      // });
+      handlers.deleteAjax(el.data()).done(function (result) {
+        console.log(result);
+      });
       row.remove();
     },
     editContact: function () {

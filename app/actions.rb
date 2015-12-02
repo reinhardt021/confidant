@@ -40,3 +40,14 @@ post '/contacts' do
 
   json results
 end
+
+delete '/contacts/delete' do
+  results = { result: false }
+  contact = Contact.find(params[:contact_id])
+  if contact
+    contact.destroy
+    # should also destroy all associated numbers
+    results[result: true]
+  end
+  json results
+end
