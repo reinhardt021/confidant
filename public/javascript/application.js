@@ -54,10 +54,16 @@ $(document).ready(function() {
 
   $('#list').on('click', handlers.listContacts);
   $('#add').on('click', handlers.addNewContact);
+  
   $('#find').on('click', function () {
     var search = $('#search').val();
+    return $.ajax({
+      url: '/contacts/find'
+      method: 'GET',
+      dataType: 'json',
+      data: { search: search }
+    });
 
-    
 
   });
 

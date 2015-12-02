@@ -8,9 +8,25 @@ get '/contacts' do
   json contacts
 end
 
-get '/contacts/find' do |id|
-  contact = Contact.find(id)
-  json contact
+get '/contacts/find' do
+  results = { result: false }
+  search = params[:search].strip
+
+  if search
+    search = "%#{search.to_s}%"     
+  else
+    search = ""
+  end
+
+  sql = "firstname LIKE ? OR lastname LIKE ? OR email LIKE ?"
+  contacts = Contact.where(sql, search, search, search)
+
+  if contact.any? # need to check if anything is returned
+    results[:result] = true
+    results[:contacts] = contacts
+  end 
+
+  json results
 end
 
 post '/contacts' do
