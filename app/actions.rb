@@ -8,7 +8,7 @@ get '/contacts' do
   json contacts
 end
 
-get '/contacts/:id' do |id|
+get '/contacts/find' do |id|
   contact = Contact.find(id)
   json contact
 end
