@@ -18,10 +18,9 @@ get '/contacts/find' do
     search = ""
   end
 
-  sql = "firstname LIKE ? OR lastname LIKE ? OR email LIKE ?"
-  contacts = Contact.where(sql, search, search, search)
+  contacts = Contact.where("firstname LIKE :term OR lastname LIKE :term OR email LIKE :term", { term: search })
 
-  if contact.any? # need to check if anything is returned
+  if contacts.any? # need to check if anything is returned
     results[:result] = true
     results[:contacts] = contacts
   end 

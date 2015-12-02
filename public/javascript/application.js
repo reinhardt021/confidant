@@ -19,15 +19,19 @@ $(document).ready(function() {
     receiveContacts: function (contacts) {
       $.each(contacts, handlers.addContact);
     },
-    listContacts: function () {
-      handlers.container.empty(); // reset table
-      handlers.getContacts().done(handlers.receiveContacts);
-    },
     getContacts: function () {
       return $.ajax({
         url: '/contacts',
         method: 'GET',
       });  
+    },
+    listContacts: function () {
+      handlers.container.empty(); // reset table
+      handlers.getContacts().done(handlers.receiveContacts);
+    },
+
+    appendContact: function (result) {
+      handlers.addContact(0, result.contact);
     },
     newContact: function (contact) {
       return $.ajax({
@@ -37,9 +41,6 @@ $(document).ready(function() {
         data: contact
       });
     },
-    appendContact: function (result) {
-      handlers.addContact(0, result.contact);
-    },
     addNewContact: function () {
       var firstName = $('#firstName').val();
       var lastName = $('#lastName').val(); 
@@ -47,25 +48,35 @@ $(document).ready(function() {
       var contact = { firstName: firstName, lastName: lastName, email: email };
 
       handlers.newContact(contact).done(handlers.appendContact);
+    },
+    searchResults: function (data) {
+      handlers.receiveContacts(data.contacts);
+      // do failure catching if no users
+    },
+    searchAjax: function (search) {
+      return $.ajax({
+        url: '/contacts/find',
+        method: 'GET',
+        dataType: 'json',
+        data: { search: search }
+      });
+    },
+    newSearch: function () {
+      var search = $('#search').val();
+      handlers.container.empty();
+      handlers.searchAjax(search).done(handlers.searchResults);
     }
-
-
   };
 
   $('#list').on('click', handlers.listContacts);
   $('#add').on('click', handlers.addNewContact);
-  
-  $('#find').on('click', function () {
-    var search = $('#search').val();
-    return $.ajax({
-      url: '/contacts/find'
-      method: 'GET',
-      dataType: 'json',
-      data: { search: search }
-    });
+  $('#find').on('click', handlers.newSearch);
 
 
-  });
+
+  // check if you can do another class
+  // did .btn-primary and this worked
+  // might have something to do with edit being created?
 
   // $('.edit').on('click', function editContact() {
   //   // var el = $(this);
