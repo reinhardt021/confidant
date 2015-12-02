@@ -71,30 +71,38 @@ $(document).ready(function() {
       var search = $('#search').val();
       handlers.container.empty();
       handlers.searchAjax(search).done(handlers.searchResults);
+    },
+    deleteAjax: function (data) {
+      return $.ajax({
+        url: '/contacts/delete',
+        method: 'DELETE',
+        dataType: 'json',
+        data: { contact_id: data.contact_id }
+      });
+    },
+    deleteContact: function () {
+      var el = $(this);
+      var row = el.closest('tr');
+      console.log(el.data()); //data gives you the contact_id
+      console.log(this); //data gives you the contact_id
+
+      // handlers.deleteAjax(el.data()).done(function (result) {
+      //   console.log(result);
+      // });
+      row.remove();
+    },
+    editContact: function () {
+      var el = $(this);
+      var row = el.closest('tr');
+      console.log(el.data());
+      console.log(row);
     }
   };
 
   $('#list').on('click', handlers.listContacts);
   $('#add').on('click', handlers.addNewContact);
   $('#find').on('click', handlers.newSearch);
-
-  // check if you can do another class
-  // did .btn-primary and this worked
-  // might have something to do with edit being created?
-  $(document).on('click', '.edit', function editContact() {
-    var el = $(this);
-    var row = el.closest('tr');
-    console.log(el.data());
-    console.log(row);
-    // debugger
-  });
-
-  $(document).on('click', '.delete', function editContact() {
-    var el = $(this);
-    var row = el.closest('tr');
-    console.log(el.data()); //data gives you the contact_id
-    row.remove();
-    // debugger
-  });
+  $(document).on('click', '.delete', handlers.deleteContact);
+  $(document).on('click', '.edit', handlers.editContact);
 
 });
