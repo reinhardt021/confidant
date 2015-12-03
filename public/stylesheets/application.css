@@ -1,0 +1,11 @@
+#forms div {
+  margin: 5px;
+}
+
+#searchForm {
+  display: none;
+}
+
+#addForm {
+  display: none;
+}

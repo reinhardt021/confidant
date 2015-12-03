@@ -2,7 +2,7 @@ $(document).ready(function() {
 
   var handlers = {
     container: $('#friends').find('tbody'),
-    
+
     addContact: function (index, contact) {
       var row = $('<tr>').appendTo(handlers.container);
       $('<td>').text(contact.firstname).appendTo(row);// add class names 
@@ -10,15 +10,18 @@ $(document).ready(function() {
       $('<td>').text(contact.email).appendTo(row);
       var nums = $('<td>').appendTo(row);
 
-      if (contact.numbers.length > 0 ) {
-        $.each(contact.numbers, function (index, num) {
-          $('<div>').text(num.number_class + ': ' + num.digits).appendTo(nums);
-        });
+      if (contact.numbers != undefined) {
+        if (contact.numbers.length > 0 ) {
+          $.each(contact.numbers, function (index, num) {
+            $('<div>').text(num.number_class + ': ' + num.digits).appendTo(nums);
+          });
+        }
       }
 
       var edit = $('<td>').appendTo(row);
-      var editButton = $('<a>').text('edit').addClass('btn btn-primary edit').data( 'contact_id', contact.id );
-      editButton.appendTo(edit);
+      // implement this later
+      // var editButton = $('<a>').text('edit').addClass('btn btn-primary edit').data( 'contact_id', contact.id );
+      // editButton.appendTo(edit);
       var deleteButton = $('<a>').text('delete').addClass('btn btn-primary delete').data( 'contact_id', contact.id );
       deleteButton.appendTo(edit);
     },
@@ -110,5 +113,15 @@ $(document).ready(function() {
   $('#find').on('click', handlers.newSearch);
   $(document).on('click', '.delete', handlers.deleteContact);
   $(document).on('click', '.edit', handlers.editContact);
+
+  $('#newSearch').on('click', function () {
+    $('#searchForm').show();
+    $('#addForm').hide();
+  });
+
+  $('#addNew').on('click', function () {
+    $('#addForm').show();
+    $('#searchForm').hide();
+  });
 
 });

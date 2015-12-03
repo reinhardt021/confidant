@@ -1,18 +1,30 @@
 <div class="container">
-  <h1><strong>CONFIDANT</strong></h1>
   <div class="well">
-    <button class="btn btn-primary" id="list">List All</button>
-    <input type="text" id="search" placeholder="Search by first name, last name, or email"/>
-    <button class="btn btn-primary" id="find">Find</button>
-    <span id="errorMsg"></span>
-
-    <fieldset id="addFriend">
-      <legend>Add Friend</legend>
-      <input type="text" id="firstName" placeholder="first name"/>
-      <input type="text" id="lastName" placeholder="last name"/>
-      <input type="text" id="email" placeholder="email"/>
-      <button class="btn btn-primary" id="add">Add</button>      
-    </fieldset>
+    <div class="row">
+      <div class="col-md-3">
+        <a href="/"><h1><strong>CONFIDANT</strong></h1></a>    
+      </div>
+      <div class="col-md-9 text-right">   
+        <div>
+          <button class="btn btn-primary" id="list">List All</button>    
+          <button class="btn btn-primary" id="newSearch">Search</button>
+          <button class="btn btn-primary" id="addNew">Add New</button>    
+        </div>
+        <div id="forms">
+          <div id="searchForm">
+            <input type="text" id="search" placeholder="Search by first name, last name, or email"/>
+            <button class="btn btn-primary" id="find">Find</button>
+            <span id="errorMsg"></span>      
+          </div>
+          <div id="addForm">
+            <input type="text" id="firstName" placeholder="first name"/>
+            <input type="text" id="lastName" placeholder="last name"/>
+            <input type="text" id="email" placeholder="email"/>
+            <button class="btn btn-primary" id="add">Add</button>      
+          </div>
+        </div>
+      </div>    
+    </div>
   </div>
   <div class="well">
     <div class="table-responsive">
