@@ -2,19 +2,25 @@ $(document).ready(function() {
 
   var handlers = {
     container: $('#friends').find('tbody'),
+    
     addContact: function (index, contact) {
       var row = $('<tr>').appendTo(handlers.container);
       $('<td>').text(contact.firstname).appendTo(row);// add class names 
       $('<td>').text(contact.lastname).appendTo(row);// select class to remove text and put input field with preset value of contact name
       $('<td>').text(contact.email).appendTo(row);
-      $('<td>').text(contact.numbers).appendTo(row);
+      var nums = $('<td>').appendTo(row);
+
+      if (contact.numbers.length > 0 ) {
+        $.each(contact.numbers, function (index, num) {
+          $('<div>').text(num.number_class + ': ' + num.digits).appendTo(nums);
+        });
+      }
+
       var edit = $('<td>').appendTo(row);
       var editButton = $('<a>').text('edit').addClass('btn btn-primary edit').data( 'contact_id', contact.id );
       editButton.appendTo(edit);
       var deleteButton = $('<a>').text('delete').addClass('btn btn-primary delete').data( 'contact_id', contact.id );
       deleteButton.appendTo(edit);
-        // may have to do a search within a search
-        // list within a list for the numbers
     },
     receiveContacts: function (contacts) {
       $.each(contacts, handlers.addContact);

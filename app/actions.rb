@@ -4,7 +4,7 @@ get '/' do
 end
 
 get '/contacts' do
-  contacts = Contact.all
+  contacts = Contact.includes(:numbers).as_json(include: :numbers)
   json contacts
 end
 
@@ -13,7 +13,7 @@ get '/contacts/find' do
   search = params[:search].strip
   contacts = Contact.search(search)
 
-  if contacts.any? # need to check if anything is returned
+  if contacts.any?
     results[:result] = true
     results[:contacts] = contacts
   end 
@@ -46,8 +46,10 @@ delete '/contacts/delete' do
   contact = Contact.find(params[:contact_id])
   if contact
     contact.destroy
-    # should also destroy all associated numbers
-    results[result: true]
+    results[:result] = true
   end
+  
   json results
 end
+
+

@@ -1,18 +1,17 @@
 class Contact < ActiveRecord::Base
-  has_many :numbers
+  has_many :numbers, dependent: :destroy
 
   validates :email, uniqueness: true
 
   scope :search, lambda { |term|
     if term
-      term = "%#{term.to_s}%"     
+      term = "%#{term.to_s}%"
     else
       term = ""
     end
-
     sql = "firstname LIKE :term OR lastname LIKE :term OR email LIKE :term"
 
-    where(sql, { term: term })
+    where(sql, { term: term }).includes(:numbers).as_json(include: :numbers)
   }
 
   def to_s
