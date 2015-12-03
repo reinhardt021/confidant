@@ -83,22 +83,18 @@ $(document).ready(function() {
     },
     deleteAjax: function (data) {
       return $.ajax({
-        url: '/contacts/delete',
+        url: '/contacts/'+ data.contact_id +'/delete',
         method: 'DELETE',
         dataType: 'json',
-        data: { contact_id: data.contact_id }
       });
     },
     deleteContact: function () {
       var el = $(this);
       var row = el.closest('tr');
-      console.log(el.data()); //data gives you the contact_id
-      console.log(this); //data gives you the contact_id
 
       handlers.deleteAjax(el.data()).done(function (result) {
-        console.log(result);
+        row.remove();
       });
-      row.remove();
     },
     editContact: function () {
       var el = $(this);

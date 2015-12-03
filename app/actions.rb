@@ -41,9 +41,10 @@ post '/contacts' do
   json results
 end
 
-delete '/contacts/delete' do
+delete '/contacts/:id/delete' do
   results = { result: false }
-  contact = Contact.find(params[:contact_id])
+  contact = Contact.find(params[:id])
+  
   if contact
     contact.destroy
     results[:result] = true
