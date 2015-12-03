@@ -10,12 +10,10 @@ $(document).ready(function() {
       $('<td>').addClass('editable email').text(contact.email).appendTo(row);
       var nums = $('<td>').appendTo(row);
 
-      if (contact.numbers != undefined) {
-        if (contact.numbers.length > 0 ) {
-          $.each(contact.numbers, function (index, num) {
-            $('<div>').text(num.number_class + ': ' + num.digits).appendTo(nums);
-          });
-        }
+      if ((contact.numbers != undefined) && (contact.numbers.length > 0)) {
+        $.each(contact.numbers, function (index, num) {
+          $('<div>').text(num.number_class + ': ' + num.digits).appendTo(nums);
+        });
       }
 
       var edit = $('<td>').appendTo(row);
