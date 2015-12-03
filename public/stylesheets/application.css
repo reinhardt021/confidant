@@ -8,4 +8,10 @@
 
 #addForm {
   display: none;
+  float: right;
 }
+
+#findInput {
+  float: right;
+}
+

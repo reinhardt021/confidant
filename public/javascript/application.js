@@ -5,9 +5,9 @@ $(document).ready(function() {
 
     addContact: function (index, contact) {
       var row = $('<tr>').appendTo(handlers.container);
-      $('<td>').text(contact.firstname).appendTo(row);// add class names 
-      $('<td>').text(contact.lastname).appendTo(row);// select class to remove text and put input field with preset value of contact name
-      $('<td>').text(contact.email).appendTo(row);
+      $('<td>').addClass('editable firstName').text(contact.firstname).appendTo(row);// add class names 
+      $('<td>').addClass('editable lastName').text(contact.lastname).appendTo(row);// select class to remove text and put input field with preset value of contact name
+      $('<td>').addClass('editable email').text(contact.email).appendTo(row);
       var nums = $('<td>').appendTo(row);
 
       if (contact.numbers != undefined) {
@@ -19,10 +19,9 @@ $(document).ready(function() {
       }
 
       var edit = $('<td>').appendTo(row);
-      // implement this later
-      // var editButton = $('<a>').text('edit').addClass('btn btn-primary edit').data( 'contact_id', contact.id );
-      // editButton.appendTo(edit);
-      var deleteButton = $('<a>').text('delete').addClass('btn btn-primary delete').data( 'contact_id', contact.id );
+      var editButton = $('<button>').text('edit').addClass('btn btn-primary edit').data( 'contact_id', contact.id );
+      editButton.appendTo(edit);
+      var deleteButton = $('<button>').text('delete').addClass('btn btn-primary delete').data( 'contact_id', contact.id );
       deleteButton.appendTo(edit);
     },
     receiveContacts: function (contacts) {
@@ -35,7 +34,7 @@ $(document).ready(function() {
       });  
     },
     listContacts: function () {
-      handlers.container.empty(); // reset table
+      handlers.container.empty();
       handlers.getContacts().done(handlers.receiveContacts);
     },
 
@@ -65,8 +64,6 @@ $(document).ready(function() {
       } else {
         $('#errorMsg').text('No results');
       }
-
-      // do failure catching if no users
     },
     searchAjax: function (search) {
       return $.ajax({
@@ -97,10 +94,27 @@ $(document).ready(function() {
       });
     },
     editContact: function () {
-      var el = $(this);
-      var row = el.closest('tr');
-      console.log(el.data());
-      console.log(row);
+      var btn = $(this);
+      btn.closest('tr').children('.editable').attr('contenteditable', true).addClass('editableCell');
+      btn.toggleClass().addClass('btn btn-primary update').text('update');
+    },
+    updateContact: function () {
+      var btn = $(this);
+      var row = btn.closest('tr');
+      var id = btn.data().contact_id;
+      var updatedContact = {
+        firstName: row.children('.firstName').text(),
+        lastName: row.children('.lastName').text(),
+        email: row.children('.email').text()
+      };
+      $.ajax({
+        url: '/contacts/'+ id,
+        method: 'PUT',
+        dataType: 'json',
+        data: updatedContact
+      });
+      row.children('.editable').attr('contenteditable', false);
+      btn.toggleClass().addClass('btn btn-primary edit').text('edit');
     }
   };
 
@@ -109,6 +123,8 @@ $(document).ready(function() {
   $('#find').on('click', handlers.newSearch);
   $(document).on('click', '.delete', handlers.deleteContact);
   $(document).on('click', '.edit', handlers.editContact);
+  $(document).on('click', '.update', handlers.updateContact);
+
 
   $('#newSearch').on('click', function () {
     $('#searchForm').show();
