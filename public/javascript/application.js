@@ -17,10 +17,13 @@ $(document).ready(function() {
       }
 
       var edit = $('<td>').appendTo(row);
-      var editButton = $('<button>').text('edit').addClass('btn btn-primary edit').data( 'contact_id', contact.id );
+      var editButton = $('<button>').text(' Edit').addClass('btn btn-primary edit').data( 'contact_id', contact.id );
       editButton.appendTo(edit);
-      var deleteButton = $('<button>').text('delete').addClass('btn btn-primary delete').data( 'contact_id', contact.id );
+      var deleteButton = $('<button>').text(' Delete').addClass('btn btn-primary delete').data( 'contact_id', contact.id );
       deleteButton.appendTo(edit);
+
+      var pencil = $('<i>').addClass('fa fa-pencil').prependTo(editButton);
+      var trash = $('<i>').addClass('fa fa-trash').prependTo(deleteButton);
     },
     receiveContacts: function (contacts) {
       $.each(contacts, handlers.addContact);
@@ -94,7 +97,8 @@ $(document).ready(function() {
     editContact: function () {
       var btn = $(this);
       btn.closest('tr').children('.editable').attr('contenteditable', true).addClass('editableCell');
-      btn.toggleClass().addClass('btn btn-primary update').text('update');
+      btn.toggleClass().addClass('btn btn-primary update').text(' Update');
+      var save = $('<i>').addClass('fa fa-floppy-o').prependTo(btn);
     },
     updateContact: function () {
       var btn = $(this);
@@ -112,7 +116,8 @@ $(document).ready(function() {
         data: updatedContact
       });
       row.children('.editable').attr('contenteditable', false);
-      btn.toggleClass().addClass('btn btn-primary edit').text('edit');
+      btn.toggleClass().addClass('btn btn-primary edit').text(' Edit');
+      var pencil = $('<i>').addClass('fa fa-pencil').prependTo(btn);
     }
   };
 

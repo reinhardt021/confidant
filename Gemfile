@@ -7,6 +7,7 @@ gem 'activesupport'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'sinatra-activerecord'
+gem "sinatra-cross_origin"
 
 gem 'puma'
 gem 'tux'
