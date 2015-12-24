@@ -16,7 +16,9 @@ $(document).ready(function() {
         });
       }
 
-      var edit = $('<td>').appendTo(row);
+      var buttons = $('<td>').appendTo(row);
+      var edit = $('<div>').addClass('btn-group').appendTo(buttons);
+
       var editButton = $('<button>').text(' Edit').addClass('btn btn-primary edit').data( 'contact_id', contact.id );
       editButton.appendTo(edit);
       var deleteButton = $('<button>').text(' Delete').addClass('btn btn-primary delete').data( 'contact_id', contact.id );
