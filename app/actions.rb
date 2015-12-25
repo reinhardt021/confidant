@@ -35,8 +35,6 @@ post '/contacts' do
   email = params[:email]
   phoneNumbers = params[:numbers]
 
-  puts phoneNumbers
-
   contact = Contact.new(
     firstname: firstname,
     lastname: lastname,
