@@ -53,11 +53,27 @@ end
 
 put '/contacts/:id' do |id|
   contact = Contact.find(id)
-  
-  # need to also update the numbers
+  digits = params[:numbers][:digits]
 
+  
   contact.update_attributes({firstname: params[:firstName], lastname: params[:lastName], email: params[:email]})
 
+  if digits
+    numbers = Number.where(contact_id: id).first
+
+    if numbers
+      numbers.update_attributes({
+        digits: digits, 
+        number_class: params[:numbers][:number_class]
+      })  
+    else
+      contact.numbers.create(
+        digits: digits,
+        number_class: params[:numbers][:number_class]
+      )
+    end 
+    
+  end
 end
 
 delete '/contacts/:id/delete' do

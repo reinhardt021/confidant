@@ -15,12 +15,12 @@ $(document).ready(function() {
       $('<td>').addClass('editable firstName').text(contact.firstname).appendTo(row);// add class names 
       $('<td>').addClass('editable lastName').text(contact.lastname).appendTo(row);// select class to remove text and put input field with preset value of contact name
       $('<td>').addClass('editable email').text(contact.email).appendTo(row);
-      var nums = $('<td>').appendTo(row);
+      var nums = $('<td>').addClass('editable phoneNumber').appendTo(row);
 
       if ((contact.numbers != undefined) && (contact.numbers.length > 0)) {
         $.each(contact.numbers, function (index, num) {
           if (index < 1) {
-            $('<div>').text(num.digits).appendTo(nums);
+            $('<div>').addClass('editable phoneNumber').text(num.digits).appendTo(nums);
           }
         });
       }
@@ -68,7 +68,15 @@ $(document).ready(function() {
       var email = $('#email').val();
       var phoneNumber = $('#phoneNumber').val();
       var numberClass = 'mobile';
-      var contact = { firstName: firstName, lastName: lastName, email: email, numbers: { digits: phoneNumber, number_class: numberClass } };
+      var contact = { 
+        firstName: firstName, 
+        lastName: lastName, 
+        email: email, 
+        numbers: { 
+          digits: phoneNumber, 
+          number_class: numberClass 
+        } 
+      };
 
       handlers.newContact(contact).done(handlers.appendContact);
       $('#newContactForm').find('input').val('');
@@ -111,7 +119,7 @@ $(document).ready(function() {
     },
     editContact: function () {
       var btn = $(this);
-      btn.closest('tr').children('.editable').attr('contenteditable', true).addClass('editableCell');
+      btn.closest('tr').find('.editable').attr('contenteditable', true);
       btn.toggleClass().addClass('btn btn-primary update').text(' Update');
       var save = $('<i>').addClass('fa fa-floppy-o').prependTo(btn);
     },
@@ -122,7 +130,11 @@ $(document).ready(function() {
       var updatedContact = {
         firstName: row.children('.firstName').text(),
         lastName: row.children('.lastName').text(),
-        email: row.children('.email').text()
+        email: row.children('.email').text(),
+        numbers: { 
+          digits: row.find('.phoneNumber').first().text(), // <td> or <div>? the .text grabs the right one
+          number_class: 'mobile'
+        }
       };
       $.ajax({
         url: '/contacts/'+ id,
@@ -130,7 +142,7 @@ $(document).ready(function() {
         dataType: 'json',
         data: updatedContact
       });
-      row.children('.editable').attr('contenteditable', false);
+      row.find('.editable').attr('contenteditable', false);
       btn.toggleClass().addClass('btn btn-primary edit').text(' Edit');
       $('<i>').addClass('fa fa-pencil').prependTo(btn);
     },
