@@ -1,12 +1,14 @@
 
 /*  
   [x] add icons
-  [_] add gradient backgrounds on wells so that looks better
-  [_] add button groups
-  [_] add make form control
+  [x] add gradient backgrounds on wells so that looks better
+  [x] add button groups
+  [x] add make form control
   [_] add gravatar to the start of the row
+
   [_] add validations for 
   [_] add phone numbers to add?
+
   [_] add things needed to fix CORS concern 
   [_] deploy to heroku
 
@@ -25,21 +27,25 @@
   background: url("../images/symphony.png");
 }
 
+.well {
+  background-color: rgba(0, 0, 0, 0.2); 
+}
+
+#title {
+  font-size: 4em;
+}
 
 #forms div {
   margin: 5px;
 }
 
-#searchForm {
+.searchForm {
   display: none;
 }
 
-#addForm {
+.addForm {
   display: none;
-  float: right;
 }
 
-#findInput {
-  float: right;
-}
+
 

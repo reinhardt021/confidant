@@ -132,13 +132,13 @@ $(document).ready(function() {
 
 
   $('#newSearch').on('click', function () {
-    $('#searchForm').show();
-    $('#addForm').hide();
+    $('.searchForm').show();
+    $('.addForm').hide();
   });
 
   $('#addNew').on('click', function () {
-    $('#addForm').show();
-    $('#searchForm').hide();
+    $('.addForm').show();
+    $('.searchForm').hide();
   });
 
 });
