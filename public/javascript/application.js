@@ -17,7 +17,9 @@ $(document).ready(function() {
 
       if ((contact.numbers != undefined) && (contact.numbers.length > 0)) {
         $.each(contact.numbers, function (index, num) {
-          $('<div>').text(num.number_class + ': ' + num.digits).appendTo(nums);
+          if (index < 1) {
+            $('<div>').text(num.digits).appendTo(nums);
+          }
         });
       }
 
