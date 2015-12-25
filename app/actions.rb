@@ -26,6 +26,9 @@ post '/contacts' do
   firstname = params[:firstName]
   lastname = params[:lastName]
   email = params[:email]
+  phoneNumbers = params[:numbers]
+
+  puts phoneNumbers
 
   contact = Contact.new(
     firstname: firstname,
@@ -34,8 +37,15 @@ post '/contacts' do
   )
 
   if contact.save
+    if phoneNumbers[:digits]
+      contact.numbers.create(
+        digits: phoneNumbers[:digits],
+        number_class: phoneNumbers[:number_class]
+      )
+    end
+
     results[:result] = true
-    results[:contact] = contact
+    results[:contact] = Contact.where(id: contact.id).includes(:numbers).as_json(include: :numbers).first
   end
 
   json results
@@ -43,7 +53,11 @@ end
 
 put '/contacts/:id' do |id|
   contact = Contact.find(id)
+  
+  # need to also update the numbers
+
   contact.update_attributes({firstname: params[:firstName], lastname: params[:lastName], email: params[:email]})
+
 end
 
 delete '/contacts/:id/delete' do

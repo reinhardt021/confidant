@@ -1,20 +1,9 @@
 
 /*  
-  [x] add icons
-  [x] add gradient backgrounds on wells so that looks better
-  [x] add button groups
-  [x] add make form control
-  [x] add gravatar to the start of the row
-
-  [_] add validations? for adding contacts - no duplicates
-
   [_] clear input fields after success
-  [_] add phone numbers to add? remove number functionality
-      - create new phone fields on the fly 
-      - have people able to edit the phone numbers 
-        - (only numbers / not type / can't add more)
-      - should people on have one number?
-  [_] add sort function
+
+  [x] add 1 phone number?
+    [_] have people able to edit the phone number (only number/ not type/ can't add more)
 
   [_] add things needed to fix CORS concern 
   [_] deploy to heroku

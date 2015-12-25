@@ -7,8 +7,10 @@ $(document).ready(function() {
       var row = $('<tr>').appendTo(handlers.container);
 
       var gravatar = $('<td>').appendTo(row);
-      var eHash = handlers.makeHash(contact.email);
-      $('<img>').attr('src','https://secure.gravatar.com/avatar/' + eHash + '?d=retro').appendTo(gravatar);
+      if (contact.email) {
+        var eHash = handlers.makeHash(contact.email);
+        $('<img>').attr('src','https://secure.gravatar.com/avatar/' + eHash + '?d=retro').appendTo(gravatar);
+      }
 
       $('<td>').addClass('editable firstName').text(contact.firstname).appendTo(row);// add class names 
       $('<td>').addClass('editable lastName').text(contact.lastname).appendTo(row);// select class to remove text and put input field with preset value of contact name
@@ -64,7 +66,9 @@ $(document).ready(function() {
       var firstName = $('#firstName').val();
       var lastName = $('#lastName').val(); 
       var email = $('#email').val();
-      var contact = { firstName: firstName, lastName: lastName, email: email };
+      var phoneNumber = $('#phoneNumber').val();
+      var numberClass = 'mobile';
+      var contact = { firstName: firstName, lastName: lastName, email: email, numbers: { digits: phoneNumber, number_class: numberClass } };
 
       handlers.newContact(contact).done(handlers.appendContact);
     },

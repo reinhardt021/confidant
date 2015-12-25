@@ -9,3 +9,6 @@ Brought to you by Reinhardt C @ Lighthouse Labs
   - can show a specific contact given an ID
   - can find a specific contact by firstname, lastname, or email
 - built using Sinatra Framework / JavaScript / jQuery / CSS front-end
+- first attempt at Single Page App
+  - front end pulls all information from AJAX requests
+  - Gravatar capabilities added for fun
