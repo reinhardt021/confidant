@@ -71,6 +71,7 @@ $(document).ready(function() {
       var contact = { firstName: firstName, lastName: lastName, email: email, numbers: { digits: phoneNumber, number_class: numberClass } };
 
       handlers.newContact(contact).done(handlers.appendContact);
+      $('#newContactForm').find('input').val('');
     },
     searchResults: function (data) {
       if (data.result) {
