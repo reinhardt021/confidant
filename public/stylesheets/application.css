@@ -4,10 +4,17 @@
   [x] add gradient backgrounds on wells so that looks better
   [x] add button groups
   [x] add make form control
-  [_] add gravatar to the start of the row
+  [x] add gravatar to the start of the row
 
-  [_] add validations for 
-  [_] add phone numbers to add?
+  [_] add validations? for adding contacts - no duplicates
+
+  [_] clear input fields after success
+  [_] add phone numbers to add? remove number functionality
+      - create new phone fields on the fly 
+      - have people able to edit the phone numbers 
+        - (only numbers / not type / can't add more)
+      - should people on have one number?
+  [_] add sort function
 
   [_] add things needed to fix CORS concern 
   [_] deploy to heroku

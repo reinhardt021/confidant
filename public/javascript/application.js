@@ -5,6 +5,11 @@ $(document).ready(function() {
 
     addContact: function (index, contact) {
       var row = $('<tr>').appendTo(handlers.container);
+
+      var gravatar = $('<td>').appendTo(row);
+      var eHash = handlers.makeHash(contact.email);
+      $('<img>').attr('src','https://secure.gravatar.com/avatar/' + eHash + '?d=retro').appendTo(gravatar);
+
       $('<td>').addClass('editable firstName').text(contact.firstname).appendTo(row);// add class names 
       $('<td>').addClass('editable lastName').text(contact.lastname).appendTo(row);// select class to remove text and put input field with preset value of contact name
       $('<td>').addClass('editable email').text(contact.email).appendTo(row);
@@ -24,8 +29,8 @@ $(document).ready(function() {
       var deleteButton = $('<button>').text(' Delete').addClass('btn btn-primary delete').data( 'contact_id', contact.id );
       deleteButton.appendTo(edit);
 
-      var pencil = $('<i>').addClass('fa fa-pencil').prependTo(editButton);
-      var trash = $('<i>').addClass('fa fa-trash').prependTo(deleteButton);
+      $('<i>').addClass('fa fa-pencil').prependTo(editButton);
+      $('<i>').addClass('fa fa-trash').prependTo(deleteButton);
     },
     receiveContacts: function (contacts) {
       $.each(contacts, handlers.addContact);
@@ -52,7 +57,8 @@ $(document).ready(function() {
         data: contact
       });
     },
-    addNewContact: function () {
+    addNewContact: function (e) {
+      e.preventDefault();
       var firstName = $('#firstName').val();
       var lastName = $('#lastName').val(); 
       var email = $('#email').val();
@@ -119,7 +125,12 @@ $(document).ready(function() {
       });
       row.children('.editable').attr('contenteditable', false);
       btn.toggleClass().addClass('btn btn-primary edit').text(' Edit');
-      var pencil = $('<i>').addClass('fa fa-pencil').prependTo(btn);
+      $('<i>').addClass('fa fa-pencil').prependTo(btn);
+    },
+    makeHash: function (email) {
+      var hash = email.trim();
+      hash = hash.toLowerCase();
+      return md5(hash); 
     }
   };
 
